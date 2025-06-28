@@ -11,60 +11,32 @@
 # - Solo las partes del cuerpo deben contar como errores, no el soporte del ahorcado.
 
 import pygame
-import random
+from funciones import *
+import sys, time
+
 
 pygame.init()
 
 # ----------------- CONFIGURACIÓN DE PANTALLA -----------------
+
+titulo = 'Ahorcado by Rocket League'
+descripcion = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra. Elige una letra, cada letra errónea será un error.'
+
 ANCHO = 800
 ALTO = 600
-VENTANA = pygame.display.set_mode((ANCHO, ALTO))
+
+pantalla = pygame.display.set_mode((ANCHO, ALTO))
 #completar con nombre del equipo
 pygame.display.set_caption("Juego del Ahorcado")
+clock = pygame.time.Clock()
 
 # ----------------- COLORES  se pueden modificar por los que elija el equipo-----------------
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
-ROJO = (255, 0, 0)
+AZUL = (37, 36, 64)
 
 # ----------------- FUENTE -----------------
 FUENTE = pygame.font.SysFont(None, 48)
-
-#-------------------Modelo de funciones, se deberan realizar en un archivo aparte
-# Las funciones del personaje deben ser creadas y completadas por el equipo en un archivo aparte
-# -------------------
-
-# ----------------- CARGAR PALABRAS DESDE ARCHIVO -----------------
-def cargar_palabras():
-    # Leer las palabras desde un archivo de texto y devolver una lista
-    # Asegurate de tener un archivo llamado palabras.txt con una palabra por línea
-    pass
-
-# ----------------- ELEGIR PALABRA AL AZAR -----------------
-def elegir_palabra(lista_palabras):
-    # Elegir una palabra aleatoria de la lista y convertirla a mayúsculas
-    pass
-
-# ----------------- DIBUJAR ESTRUCTURA DEL AHORCADO -----------------
-def dibujar_estructura():
-    # Dibuja la base, palo y cuerda del ahorcado (no cuenta como error)
-    pass
-
-# ----------------- DIBUJAR PARTES DEL CUERPO -----------------
-def dibujar_cuerpo(errores):
-    # Dibujar cabeza, tronco, brazos y piernas en base a la cantidad de errores
-    pass
-
-# ----------------- DIBUJAR JUEGO EN PANTALLA -----------------
-def dibujar_juego(palabra, letras_adivinadas, errores):
-    # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
-    pass
-
-# ----------------- VERIFICAR LETRA -----------------
-def verificar_letra(letra, palabra, letras_adivinadas):
-    # Agregar la letra a letras_adivinadas si no estaba
-    # Retornar True si la letra está en la palabra, False si no
-    pass
 
 # ----------------- SONIDO -----------------
 pygame.mixer.init()  # Inicializa el motor de sonido
@@ -85,8 +57,28 @@ def jugar():
     #     - Controlar FPS
 
     # Instrucción: este bloque debe ser completado por el estudiante según las consignas
-    pass
+    
+
+    while True:
+
+        clock.tick(30)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+        pantalla.fill(AZUL)
+
+        mostrar_texto(descripcion, 15, 15, BLANCO, 20)
+
+        dibujar_estructura()
+        
+        pygame.display.update()
+        
+
+        
 
 # No ejecutar el juego automáticamente: solo se invoca desde consola o importación
 # Descomentar la línea siguiente para probar el juego terminado:
-# jugar()
+jugar()
