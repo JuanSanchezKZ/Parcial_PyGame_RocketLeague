@@ -19,24 +19,28 @@ pygame.init()
 
 # ----------------- CONFIGURACIÓN DE PANTALLA -----------------
 
-titulo = 'Ahorcado by Rocket League'
-descripcion = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra. Elige una letra, cada letra errónea será un error.'
-
 ANCHO = 800
 ALTO = 600
 
+titulo = 'Ahorcado by Rocket League'
+
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
-#completar con nombre del equipo
-pygame.display.set_caption("Juego del Ahorcado")
+
+pygame.display.set_caption(titulo)
+
+icono = pygame.image.load("logo.png")
+
+pygame.display.set_icon(icono)
+
 clock = pygame.time.Clock()
 
 # ----------------- COLORES  se pueden modificar por los que elija el equipo-----------------
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
-AZUL = (37, 36, 64)
+
 
 # ----------------- FUENTE -----------------
-FUENTE = pygame.font.SysFont(None, 48)
+FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
 # ----------------- SONIDO -----------------
 pygame.mixer.init()  # Inicializa el motor de sonido
@@ -57,7 +61,22 @@ def jugar():
     #     - Controlar FPS
 
     # Instrucción: este bloque debe ser completado por el estudiante según las consignas
+
+    keys = {
+    pygame.K_a: 'a', pygame.K_b: 'b', pygame.K_c: 'c', pygame.K_d: 'd',
+    pygame.K_e: 'e', pygame.K_f: 'f', pygame.K_g: 'g', pygame.K_h: 'h',
+    pygame.K_i: 'i', pygame.K_j: 'j', pygame.K_k: 'k', pygame.K_l: 'l',
+    pygame.K_m: 'm', pygame.K_n: 'n', pygame.K_o: 'o', pygame.K_p: 'p',
+    pygame.K_q: 'q', pygame.K_r: 'r', pygame.K_s: 's', pygame.K_t: 't',
+    pygame.K_u: 'u', pygame.K_v: 'v', pygame.K_w: 'w', pygame.K_x: 'x',
+    pygame.K_y: 'y', pygame.K_z: 'z',
+}
     
+    lista_palabras = cargar_palabras()
+
+    palabra_random = elegir_palabra(lista_palabras)
+
+    letras_adivinadas = []
 
     while True:
 
@@ -67,13 +86,16 @@ def jugar():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        
-        pantalla.fill(AZUL)
+            elif event.type == pygame.KEYDOWN:
+                if event.key in keys:
+                    letra = keys[event.key].upper()
+                    resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
 
-        mostrar_texto(descripcion, 15, 15, BLANCO, 20)
+        dibujar_juego(palabra_random, letras_adivinadas, 5)  
 
-        dibujar_estructura()
-        
+        for i, palabra in enumerate(letras_adivinadas):
+            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)                  
+
         pygame.display.update()
         
 
