@@ -42,9 +42,7 @@ NEGRO = (0, 0, 0)
 # ----------------- FUENTE -----------------
 FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
-# ----------------- SONIDO -----------------
-pygame.mixer.init()  # Inicializa el motor de sonido
-sonido_error = pygame.mixer.Sound("error.wav")  # Asegurate de tener este archivo
+
 
 # ----------------- BUCLE PRINCIPAL -----------------
 def jugar():
@@ -78,6 +76,10 @@ def jugar():
 
     letras_adivinadas = []
 
+    errores = 0
+
+ 
+
     while True:
 
         clock.tick(30)
@@ -90,8 +92,15 @@ def jugar():
                 if event.key in keys:
                     letra = keys[event.key].upper()
                     resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
+                    if letra not in letras_adivinadas:
+                        if not resultado:      
+                            errores += 1
+                            dibujar_cuerpo(errores)
 
-        dibujar_juego(palabra_random, letras_adivinadas, 5)  
+
+                    
+
+        dibujar_juego(palabra_random, letras_adivinadas, errores)  
 
         for i, palabra in enumerate(letras_adivinadas):
             mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)                  

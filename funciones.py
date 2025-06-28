@@ -6,6 +6,11 @@ BLANCO = (255, 255, 255)
 AZUL = (37, 36, 64)
 pantalla = pygame.display.set_mode(ancho_y_alto)
 
+# ----------------- SONIDO -----------------
+pygame.mixer.init()  # Inicializa el motor de sonido
+sonido_error = pygame.mixer.Sound("error.wav")  # Asegurate de tener este archivo
+pygame.mixer.Sound.set_volume(sonido_error, 0.2)
+
 descripcion = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra. Elige una letra, cada letra errónea será un error.'
 
 # ----------------- CARGAR PALABRAS DESDE ARCHIVO -----------------
@@ -26,7 +31,7 @@ def cargar_palabras():
 def elegir_palabra(lista_palabras: list):
     # Elegir una palabra aleatoria de la lista y convertirla a mayúsculas
 
-    numero_aleatorio = random.randint(1, len(lista_palabras))
+    numero_aleatorio = random.randint(0, len(lista_palabras) - 1)
 
     palabra_aleatoria = lista_palabras[numero_aleatorio].upper()
 
@@ -64,22 +69,42 @@ def dibujar_estructura():
 # ----------------- DIBUJAR PARTES DEL CUERPO -----------------
 def dibujar_cuerpo(errores):
     # Dibujar cabeza, tronco, brazos y piernas en base a la cantidad de errores
-    pass
+    if errores >= 1:
+        pygame.draw.circle(pantalla, BLANCO, (250, 270), 30, 3)
+
+    if errores >= 2:
+        pygame.draw.line(pantalla, BLANCO, (250, 300), (250, 400), 3)
+
+    if errores >= 3:
+        pygame.draw.line(pantalla, BLANCO, (250, 320), (210, 360), 3)
+
+    if errores >= 4:
+        pygame.draw.line(pantalla, BLANCO, (250, 320), (290, 360), 3)
+
+    if errores >= 5:
+        pygame.draw.line(pantalla, BLANCO, (250, 400), (210, 460), 3)
+
+    if errores >= 6:
+        pygame.draw.line(pantalla, BLANCO, (250, 400), (290, 460), 3)
 
 # ----------------- DIBUJAR JUEGO EN PANTALLA -----------------
 def dibujar_juego(palabra, letras_adivinadas, errores):
     # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
     pantalla.fill(AZUL)
 
+    guiones = []
+
     for i, caracter in enumerate(palabra):
 
-        pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3)
+        guiones.append(pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3))
 
     mostrar_texto(descripcion, 15, 15, BLANCO, 20)
 
+
+    dibujar_cuerpo(errores)
+
     dibujar_estructura()
 
-    
 
 # ----------------- VERIFICAR LETRA -----------------
 def verificar_letra(letra, palabra: str, letras_adivinadas): ## letras adivinadas = letras incorrectas
@@ -89,5 +114,6 @@ def verificar_letra(letra, palabra: str, letras_adivinadas): ## letras adivinada
         return True
     else:
         if letra not in letras_adivinadas:
+            pygame.mixer.Sound.play(sonido_error)
             letras_adivinadas.append(letra)
             return False
