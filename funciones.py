@@ -11,7 +11,9 @@ pygame.mixer.init()  # Inicializa el motor de sonido
 sonido_error = pygame.mixer.Sound("error.wav")  # Asegurate de tener este archivo
 pygame.mixer.Sound.set_volume(sonido_error, 0.2)
 
-descripcion = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra. Elige una letra, cada letra errónea será un error.'
+descripcion_1 = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra.'
+descripcion_2 = 'Elige una letra, cada letra errónea será un error.'
+
 
 # ----------------- CARGAR PALABRAS DESDE ARCHIVO -----------------
 def cargar_palabras():
@@ -87,7 +89,9 @@ def dibujar_cuerpo(errores):
         pygame.draw.line(pantalla, BLANCO, (250, 400), (290, 460), 3)
 
 def dibujar_lineas_o_texto(letras_correctas):
+
     for i, caracter in enumerate(letras_correctas):
+
         if caracter == "":
             pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3)
         else:
@@ -100,7 +104,9 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
     # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
     pantalla.fill(AZUL)
 
-    mostrar_texto(descripcion, 15, 15, BLANCO, 20)
+    mostrar_texto(descripcion_1, 15, 15, BLANCO, 25)
+
+    mostrar_texto(descripcion_2, 15, 38, BLANCO, 25)
 
     dibujar_lineas_o_texto(letras_correctas)
 

@@ -96,7 +96,7 @@ def jugar():
                     letra = keys[event.key].upper()
                     if letra not in letras_adivinadas:  
                         resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
-                        if not resultado:   
+                        if not resultado and errores <= 6:   
                             errores += 1
                             dibujar_cuerpo(errores)
                         else:
@@ -107,22 +107,23 @@ def jugar():
 
                                     ## ["", "", ""], [S, O, ""]
 
+        dibujar_juego(palabra_random, letras_adivinadas, errores, letras_correctas)  
+
+        for i, palabra in enumerate(letras_adivinadas):
+            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)      
         
         if errores >= 6:
-            mostrar_texto(f"¡Perdiste, la palabra era {palabra_random}!", 150, 300, BLANCO, 50)
+            pantalla.fill(AZUL)
+            mostrar_texto(f"¡Perdiste, la palabra era {palabra_random}!", 125, 300, BLANCO, 50)
             pygame.display.flip()
             time.sleep(3)
             pygame.quit()
             sys.exit()
             
 
-        dibujar_juego(palabra_random, letras_adivinadas, errores, letras_correctas)  
-
-        for i, palabra in enumerate(letras_adivinadas):
-            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)      
-
         if "" not in letras_correctas:
-            mostrar_texto(f"¡Ganaste!", 150, 300, BLANCO, 50)
+            pantalla.fill(AZUL)
+            mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
             pygame.display.flip()
             time.sleep(3)
             pygame.quit()
