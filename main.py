@@ -43,7 +43,13 @@ NEGRO = (0, 0, 0)
 # ----------------- FUENTE -----------------
 FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
-personaje = crear_personaje(125,400,125,125,"rocketleague.png")
+rect_rocket_league = pygame.Rect((ANCHO / 2) + 50, 100, 300, 200)
+
+personaje_x = rect_rocket_league.centerx - 75
+personaje_y = rect_rocket_league.bottom - 125
+
+personaje = crear_personaje(personaje_x ,personaje_y ,125 ,125 ,"rocketleague.png")
+
 
 
 # ----------------- BUCLE PRINCIPAL -----------------
@@ -79,7 +85,6 @@ def jugar():
     'letras_correctas' : [],
     'errores' : 0,
     "juego_terminado":False,
-    "victoria": False
     }
 
     for x in eventos_juego['palabra_random']:
@@ -112,30 +117,27 @@ def jugar():
         keys_pressed = pygame.key.get_pressed()
 
         if keys_pressed[pygame.K_LEFT]:
-            update(personaje, -10)
+            update(personaje, -10, rect_rocket_league)
         if keys_pressed[pygame.K_RIGHT]:
-            update(personaje, 10)  
+            update(personaje, 10, rect_rocket_league)  
 
         dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])    
         
+
         pantalla.blit(personaje['surface'], personaje['rect_pos'])
 
-        if eventos_juego['errores'] >= 6:
+        if eventos_juego['errores'] >= 6 or "" not in eventos_juego['letras_correctas']:
             eventos_juego['juego_terminado'] = True
-
-        if "" not in eventos_juego['letras_correctas']:
-            eventos_juego['juego_terminado'] = True
-            eventos_juego['victoria'] = True
 
         if eventos_juego['juego_terminado']:
 
             pantalla.fill(AZUL)
 
-            if not eventos_juego['victoria']:
+            if eventos_juego['errores'] >= 6 or "":
                 
                 mostrar_texto(f"¡Perdiste, la palabra era {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
                          
-            if eventos_juego['victoria']:
+            if "" not in eventos_juego['letras_correctas']:
 
                 mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
      

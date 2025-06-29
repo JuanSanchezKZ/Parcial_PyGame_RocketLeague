@@ -108,6 +108,12 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
 
     mostrar_texto(descripcion_2, 15, 38, BLANCO, 25)
 
+    rect_x = (800 / 2) + 50 
+    rect_y = 100 
+
+    # Dibujamos el rectángulo
+    pygame.draw.rect(pantalla, BLANCO, (rect_x, rect_y, 300, 200), 3)
+    
     for i, palabra in enumerate(letras_adivinadas):
             mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30) 
 
