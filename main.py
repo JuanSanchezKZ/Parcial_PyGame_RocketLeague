@@ -76,6 +76,11 @@ def jugar():
 
     letras_adivinadas = []
 
+    letras_correctas = []
+
+    for x in palabra_random:
+        letras_correctas.append("")
+
     errores = 0
 
  
@@ -91,16 +96,18 @@ def jugar():
             elif event.type == pygame.KEYDOWN:
                 if event.key in keys:
                     letra = keys[event.key].upper()
-                    resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
-                    if letra not in letras_adivinadas:
-                        if not resultado:      
+                    if letra not in letras_adivinadas:  
+                        resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
+                        if not resultado:   
                             errores += 1
                             dibujar_cuerpo(errores)
+                        else:
+                            for i, x in enumerate(palabra_random):
+                                if letra == x:
+                                    letras_correctas[i] = palabra_random[i]
 
 
-                    
-
-        dibujar_juego(palabra_random, letras_adivinadas, errores)  
+        dibujar_juego(palabra_random, letras_adivinadas, errores, letras_correctas)  
 
         for i, palabra in enumerate(letras_adivinadas):
             mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)                  

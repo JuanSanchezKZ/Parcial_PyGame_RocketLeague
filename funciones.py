@@ -53,8 +53,7 @@ def mostrar_texto(texto, x, y, color, tamanio_fuente):
 # ----------------- DIBUJAR ESTRUCTURA DEL AHORCADO -----------------
 def dibujar_estructura():
     
-        # Base más chica (cerca del borde izquierdo)
-    pygame.draw.rect(pantalla, BLANCO, (50, 520, 150, 15))  # base al borde
+    pygame.draw.rect(pantalla, BLANCO, (50, 520, 150, 15))  # base
 
     # Palo vertical
     pygame.draw.line(pantalla, BLANCO, (125, 520), (125, 200), 8)
@@ -87,19 +86,23 @@ def dibujar_cuerpo(errores):
     if errores >= 6:
         pygame.draw.line(pantalla, BLANCO, (250, 400), (290, 460), 3)
 
+def dibujar_lineas_o_texto(letras_correctas):
+    for i, caracter in enumerate(letras_correctas):
+        if caracter == "":
+            pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3)
+        else:
+            mostrar_texto(caracter, 350 + i * 42, 480, BLANCO, 30)
+        
+
+
 # ----------------- DIBUJAR JUEGO EN PANTALLA -----------------
-def dibujar_juego(palabra, letras_adivinadas, errores):
+def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
     # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
     pantalla.fill(AZUL)
 
-    guiones = []
-
-    for i, caracter in enumerate(palabra):
-
-        guiones.append(pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3))
-
     mostrar_texto(descripcion, 15, 15, BLANCO, 20)
 
+    dibujar_lineas_o_texto(letras_correctas)
 
     dibujar_cuerpo(errores)
 
