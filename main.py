@@ -82,9 +82,7 @@ def jugar():
         letras_correctas.append("")
 
     errores = 0
-
  
-
     while True:
 
         clock.tick(30)
@@ -105,12 +103,30 @@ def jugar():
                             for i, x in enumerate(palabra_random):
                                 if letra == x:
                                     letras_correctas[i] = palabra_random[i]
+                    
 
+                                    ## ["", "", ""], [S, O, ""]
+
+        
+        if errores >= 6:
+            mostrar_texto(f"¡Perdiste, la palabra era {palabra_random}!", 150, 300, BLANCO, 50)
+            pygame.display.flip()
+            time.sleep(3)
+            pygame.quit()
+            sys.exit()
+            
 
         dibujar_juego(palabra_random, letras_adivinadas, errores, letras_correctas)  
 
         for i, palabra in enumerate(letras_adivinadas):
-            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)                  
+            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)      
+
+        if "" not in letras_correctas:
+            mostrar_texto(f"¡Ganaste!", 150, 300, BLANCO, 50)
+            pygame.display.flip()
+            time.sleep(3)
+            pygame.quit()
+            sys.exit()            
 
         pygame.display.update()
         

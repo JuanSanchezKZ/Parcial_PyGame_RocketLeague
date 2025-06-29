@@ -23,7 +23,7 @@ def cargar_palabras():
     with open("palabras.txt", 'r') as archivo:
         lista_de_lineas = archivo.readlines() 
         for linea in lista_de_lineas:
-            lista_palabras.append(linea.strip())
+            lista_palabras.append(linea.strip()) ## Recorremos la lista que devuelve readlines para utilizar strip() y sacar los espacios en blanco o saltos de linea.
                
     return lista_palabras
 
