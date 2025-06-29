@@ -108,6 +108,9 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
 
     mostrar_texto(descripcion_2, 15, 38, BLANCO, 25)
 
+    for i, palabra in enumerate(letras_adivinadas):
+            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30) 
+
     dibujar_lineas_o_texto(letras_correctas)
 
     dibujar_cuerpo(errores)

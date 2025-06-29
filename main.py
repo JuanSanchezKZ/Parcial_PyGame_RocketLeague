@@ -78,10 +78,11 @@ def jugar():
 
     letras_correctas = []
 
+    errores = 0
+
     for x in palabra_random:
         letras_correctas.append("")
 
-    errores = 0
  
     while True:
 
