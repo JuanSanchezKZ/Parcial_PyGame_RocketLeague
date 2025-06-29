@@ -69,19 +69,18 @@ def jugar():
     pygame.K_u: 'u', pygame.K_v: 'v', pygame.K_w: 'w', pygame.K_x: 'x',
     pygame.K_y: 'y', pygame.K_z: 'z',
 }
-    
-    lista_palabras = cargar_palabras()
+    lista_palabras = cargar_palabras()  # Ejecuta la función para obtener las palabras
+    palabra_random = elegir_palabra(lista_palabras)  # Selecciona una palabra aleatoria
 
-    palabra_random = elegir_palabra(lista_palabras)
-
-    letras_adivinadas = []
-
-    letras_correctas = []
-
-    for x in palabra_random:
-        letras_correctas.append("")
-
-    errores = 0
+    eventos_juego = { 
+    'lista_palabras' : cargar_palabras(),
+    'palabra_random' : elegir_palabra(lista_palabras),
+    'letras_adivinadas' :[],
+    'letras_correctas' : [],
+    'errores' : 0
+    }
+    for x in eventos_juego['palabra_random']:
+        eventos_juego['letras_correctas'].append("")
  
     while True:
 
@@ -94,34 +93,34 @@ def jugar():
             elif event.type == pygame.KEYDOWN:
                 if event.key in keys:
                     letra = keys[event.key].upper()
-                    if letra not in letras_adivinadas:  
-                        resultado = verificar_letra(letra, palabra_random, letras_adivinadas)
-                        if not resultado and errores <= 6:   
-                            errores += 1
-                            dibujar_cuerpo(errores)
+                    if letra not in eventos_juego['letras_adivinadas']:  
+                        resultado = verificar_letra(letra, eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'])
+                        if not resultado and eventos_juego['errores'] <= 6:   
+                            eventos_juego['errores'] += 1
+                            dibujar_cuerpo(eventos_juego['errores'])
                         else:
-                            for i, x in enumerate(palabra_random):
+                            for i, x in enumerate(eventos_juego['palabra_random']):
                                 if letra == x:
-                                    letras_correctas[i] = palabra_random[i]
+                                    eventos_juego['letras_correctas'][i] = eventos_juego['palabra_random'][i]
                     
 
                                     ## ["", "", ""], [S, O, ""]
 
-        dibujar_juego(palabra_random, letras_adivinadas, errores, letras_correctas)  
+        dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])  
 
-        for i, palabra in enumerate(letras_adivinadas):
+        for i, palabra in enumerate(eventos_juego['letras_adivinadas']):
             mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30)      
         
-        if errores >= 6:
+        if eventos_juego['errores'] >= 6:
             pantalla.fill(AZUL)
-            mostrar_texto(f"¡Perdiste, la palabra era {palabra_random}!", 125, 300, BLANCO, 50)
+            mostrar_texto(f"¡Perdiste, la palabra era {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
             pygame.display.flip()
             time.sleep(3)
             pygame.quit()
             sys.exit()
             
 
-        if "" not in letras_correctas:
+        if "" not in eventos_juego['letras_correctas']:
             pantalla.fill(AZUL)
             mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
             pygame.display.flip()
