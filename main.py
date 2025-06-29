@@ -43,8 +43,7 @@ NEGRO = (0, 0, 0)
 # ----------------- FUENTE -----------------
 FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
-personaje_perdedor = crear_personaje(125,400,125,125,"fennec.png")
-personaje_ganador = crear_personaje(125,400,125,125,"rocketleague.png")
+personaje = crear_personaje(125,400,125,125,"rocketleague.png")
 
 
 # ----------------- BUCLE PRINCIPAL -----------------
@@ -79,7 +78,8 @@ def jugar():
     'letras_adivinadas' : [],
     'letras_correctas' : [],
     'errores' : 0,
-    "juego_terminado":False
+    "juego_terminado":False,
+    "victoria": False
     }
 
     for x in eventos_juego['palabra_random']:
@@ -108,36 +108,37 @@ def jugar():
                     
 
                                     ## ["", "", ""], [S, O, ""]
-        
 
-     
+        keys_pressed = pygame.key.get_pressed()
+
+        if keys_pressed[pygame.K_LEFT]:
+            update(personaje, -10)
+        if keys_pressed[pygame.K_RIGHT]:
+            update(personaje, 10)  
 
         dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])    
         
+        pantalla.blit(personaje['surface'], personaje['rect_pos'])
+
         if eventos_juego['errores'] >= 6:
-            pantalla.fill(AZUL)
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                update(personaje_perdedor, -10)
-            if keys[pygame.K_RIGHT]:
-                update(personaje_perdedor, 10)
-            mostrar_texto(f"¡Perdiste, la palabra eraa {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
-            pantalla.blit(personaje_perdedor["surface"],personaje_perdedor["rect_pos"])
-            pygame.display.flip()
-            time.sleep(3)
-            pygame.quit()
-            sys.exit()
-            
+            eventos_juego['juego_terminado'] = True
 
         if "" not in eventos_juego['letras_correctas']:
+            eventos_juego['juego_terminado'] = True
+            eventos_juego['victoria'] = True
+
+        if eventos_juego['juego_terminado']:
+
             pantalla.fill(AZUL)
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                update(personaje_ganador, -10)
-            if keys[pygame.K_RIGHT]:
-                update(personaje_ganador, 10)
-            mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
-            pantalla.blit(personaje_ganador["surface"],personaje_ganador["rect_pos"])
+
+            if not eventos_juego['victoria']:
+                
+                mostrar_texto(f"¡Perdiste, la palabra era {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
+                         
+            if eventos_juego['victoria']:
+
+                mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
+     
             pygame.display.flip()
             time.sleep(3)
             pygame.quit()
