@@ -43,7 +43,7 @@ def mostrar_texto(texto, x, y, color, tamanio_fuente):
 
     fuente = pygame.font.SysFont('freesansbold.ttf', tamanio_fuente)
 
-    text = fuente.render(texto, False, color)
+    text = fuente.render(texto, True, color)
 
     textRect = text.get_rect()
 
@@ -131,7 +131,6 @@ def verificar_letra(letra, palabra: str, letras_adivinadas): ## letras adivinada
     if letra in palabra:
         return True
     else:
-        if letra not in letras_adivinadas:
-            pygame.mixer.Sound.play(sonido_error)
-            letras_adivinadas.append(letra)
-            return False
+        pygame.mixer.Sound.play(sonido_error)
+        letras_adivinadas.append(letra)
+        return False
