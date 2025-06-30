@@ -39,32 +39,32 @@ def elegir_palabra(lista_palabras: list):
 
     return palabra_aleatoria
 
-def mostrar_texto(texto, x, y, color, tamanio_fuente):
+def mostrar_texto(texto, x, y, color, tamanio_fuente):# Definimos la función mostrar_texto que recibe el texto, coordenadas x e y, color y tamaño de fuente
 
-    fuente = pygame.font.SysFont('freesansbold.ttf', tamanio_fuente)
+    fuente = pygame.font.SysFont('freesansbold.ttf', tamanio_fuente) # Cargamos la fuente con el tamaño especificado
 
-    text = fuente.render(texto, True, color)
+    text = fuente.render(texto, True, color) # Renderizamos el texto con la fuente y el color especificado
 
-    textRect = text.get_rect()
+    textRect = text.get_rect() # Obtenemos el rectángulo del texto renderizado
 
-    textRect.x = x
-    textRect.y = y
+    textRect.x = x # Asignamos la coordenada x al rectángulo del texto
+    textRect.y = y # Asignamos la coordenada y al rectángulo del texto
 
-    pantalla.blit(text, textRect)
+    pantalla.blit(text, textRect) # Dibujamos el texto en la pantalla en la posición especificada
 
 # ----------------- DIBUJAR ESTRUCTURA DEL AHORCADO -----------------
-def dibujar_estructura():
+def dibujar_estructura(): # Dibujamos la estructura del ahorcado
     
-    pygame.draw.rect(pantalla, BLANCO, (50, 520, 150, 15))  # base
+    pygame.draw.rect(pantalla, BLANCO, (50, 520, 150, 15))  # Dibujamos la Base del ahorcado con su color su eje x e y y su ancho y alto
 
     # Palo vertical
-    pygame.draw.line(pantalla, BLANCO, (125, 520), (125, 200), 8)
+    pygame.draw.line(pantalla, BLANCO, (125, 520), (125, 200), 8) # Dibujamos el Palo Vertical del ahorcado con su color su eje x e y y su ancho y alto
 
     # Palo superior
-    pygame.draw.line(pantalla, BLANCO, (125, 200), (250, 200), 8)
+    pygame.draw.line(pantalla, BLANCO, (125, 200), (250, 200), 8) # Dibujamos el Palo superior del ahorcado con su color su eje x e y y su ancho y alto
 
     # Cuerda
-    pygame.draw.line(pantalla, BLANCO, (250, 200), (250, 240), 3)
+    pygame.draw.line(pantalla, BLANCO, (250, 200), (250, 240), 3) # Dibujamos la cuerda con su color su eje x e y y su ancho y alto
         
 
 # ----------------- DIBUJAR PARTES DEL CUERPO -----------------
@@ -102,9 +102,9 @@ def dibujar_lineas_o_texto(letras_correctas):
 # ----------------- DIBUJAR JUEGO EN PANTALLA -----------------
 def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
     # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
-    pantalla.fill(AZUL)
+    pantalla.fill(AZUL) # Llenamos el fondo con el color azul
 
-    mostrar_texto(descripcion_1, 15, 15, BLANCO, 25)
+    mostrar_texto(descripcion_1, 15, 15, BLANCO, 25) 
 
     mostrar_texto(descripcion_2, 15, 38, BLANCO, 25)
 
@@ -133,4 +133,4 @@ def verificar_letra(letra, palabra_random: str, letras_adivinadas): ## letras ad
     else: #Sino
         pygame.mixer.Sound.play(sonido_error) # Si la letra no está en la palabra, reproducimos el sonido de error
         letras_adivinadas.append(letra) # Agregamos la letra a letras adivinadas
-        return False # Devolvemos False si la letra no está en la palabra
+        return False # Devolvemos False si la letra no está en la palabra¡
