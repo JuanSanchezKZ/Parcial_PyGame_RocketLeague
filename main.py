@@ -23,6 +23,14 @@ pygame.init() ## Inicializamos pygame
 ANCHO = 800 # Definimos ancho de pantalla
 ALTO = 600 # Definimos alto de pantalla
 
+# --------------------- SONIDOS ------------------------ #
+
+pygame.mixer.init()  # Inicializa el motor de sonido
+ganar_sonido = pygame.mixer.Sound("ganar_sonido.wav")  # Cargamos sonido de victoria
+pygame.mixer.Sound.set_volume(ganar_sonido, 0.2) # Bajamos un poco el volumen
+perder_sonido = pygame.mixer.Sound("perder_sonido.mp3")  # Cargamos sonido de victoria
+pygame.mixer.Sound.set_volume(perder_sonido, 0.2) # Bajamos un poco el volumen
+
 titulo = 'Ahorcado by Rocket League' # Definimos el título del juego
 
 pantalla = pygame.display.set_mode((ANCHO, ALTO)) # Creamos la variable pantalla con set_mode con su ancho y alto
@@ -39,10 +47,6 @@ clock = pygame.time.Clock() # Definimos la variable clock para luego controlar l
 
 BLANCO = (255, 255, 255) # Color blanco RGB
 NEGRO = (0, 0, 0) # Color negro RGB
-
-# ----------------- FUENTE -----------------
-
-FUENTE = pygame.font.SysFont('freesansbold.ttf', 20) # Definimos fuente principal del juego
 
 # ---------------- PERSONAJE PRINCIPAL (AUTO ROCKET LEAGUE) --------------- 
 
@@ -100,11 +104,11 @@ def jugar():
 
     for x in eventos_juego['palabra_random']: ## Recorremos la palabra a adivinar
         eventos_juego['letras_correctas'].append("") ## Llenamos de strings vacíos la lista de letras correctas
-        ## 
+        ## con la misma cantidad de letras que contenga la palabra a adivinar
  
-    while True:
+    while True: ## Inciializamos el bucle principal
 
-        clock.tick(30)
+        clock.tick(30) ## Seteamos los fps a 30
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -126,18 +130,23 @@ def jugar():
 
                                     ## ["", "", ""], [S,"", L]
 
-        keys_pressed = pygame.key.get_pressed()
+        keys_pressed = pygame.key.get_pressed() ## Obtenemos las keys presionadas
 
-        if keys_pressed[pygame.K_LEFT]:
+        if keys_pressed[pygame.K_LEFT]: ## Si aprieta la flecha para la izquierda
+            ## Llamamos a update con nuestro personaje y un movimiento sobre el eje x de -10
             update(personaje, -10, rect_rocket_league)
-        if keys_pressed[pygame.K_RIGHT]:
+        if keys_pressed[pygame.K_RIGHT]: ## Si aprieta la flecha para la derecha
+            ## Llamamos a update con nuestro personaje y un movimiento sobre el eje x de 10
             update(personaje, 10, rect_rocket_league)  
 
+        ## Llamamos a dibujar_juego con los eventos del ahorcado como argumentos.
         dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])    
         
-
+        ## Dibujamos el personaje en pantalla llamando utilizando blit
         pantalla.blit(personaje['surface'], personaje['rect_pos'])
 
+        ## Si los errores son mayores o iguales a 6 o no hay más letras adivinar en letras_correctas
+        ## entonces el juego terminó
         if eventos_juego['errores'] >= 6 or "" not in eventos_juego['letras_correctas']:
             eventos_juego['juego_terminado'] = True
 
@@ -148,15 +157,17 @@ def jugar():
             if eventos_juego['errores'] >= 6 or "":
                 
                 mostrar_texto(f"¡Perdiste, la palabra era {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
-                         
+                pygame.mixer.Sound.play(perder_sonido)
+
             if "" not in eventos_juego['letras_correctas']:
 
                 mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
+                pygame.mixer.Sound.play(ganar_sonido)
      
             pygame.display.flip()
-            time.sleep(3)
+            time.sleep(5)
             pygame.quit()
-            sys.exit()            
+            sys.exit() ## Cerramos el juego finalmente en cualquiera de los dos casos si perdió o ganó            
 
         pygame.display.update()
         

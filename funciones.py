@@ -8,11 +8,14 @@ pantalla = pygame.display.set_mode(ancho_y_alto)
 
 # ----------------- SONIDO -----------------
 pygame.mixer.init()  # Inicializa el motor de sonido
-sonido_error = pygame.mixer.Sound("error.wav")  # Asegurate de tener este archivo
-pygame.mixer.Sound.set_volume(sonido_error, 0.2)
+sonido_error = pygame.mixer.Sound("error.wav")  # Cargamos el archivo de sonido de error
+pygame.mixer.Sound.set_volume(sonido_error, 0.2) # Bajamos el volumen
 
-descripcion_1 = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra.'
-descripcion_2 = 'Elige una letra, cada letra errónea será un error.'
+
+# ------------- DESCRIPCION ------------------
+# PYGAME NO ADMITE SALTOS DE LINEA ASI QUE USAMOS DOS VARIABLES PARA LA DESCRIPCION
+descripcion_1 = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra.' # Primera linea
+descripcion_2 = 'Elige una letra, cada letra errónea será un error.' # Segunda linea
 
 
 # ----------------- CARGAR PALABRAS DESDE ARCHIVO -----------------
@@ -57,13 +60,10 @@ def dibujar_estructura(): # Dibujamos la estructura del ahorcado
     
     pygame.draw.rect(pantalla, BLANCO, (50, 520, 150, 15))  # Dibujamos la Base del ahorcado con su color su eje x e y y su ancho y alto
 
-    # Palo vertical
     pygame.draw.line(pantalla, BLANCO, (125, 520), (125, 200), 8) # Dibujamos el Palo Vertical del ahorcado con su color su eje x e y y su ancho y alto
 
-    # Palo superior
     pygame.draw.line(pantalla, BLANCO, (125, 200), (250, 200), 8) # Dibujamos el Palo superior del ahorcado con su color su eje x e y y su ancho y alto
 
-    # Cuerda
     pygame.draw.line(pantalla, BLANCO, (250, 200), (250, 240), 3) # Dibujamos la cuerda con su color su eje x e y y su ancho y alto
         
 
