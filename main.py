@@ -10,43 +10,50 @@
 # - El código debe estar comentado línea por línea.
 # - Solo las partes del cuerpo deben contar como errores, no el soporte del ahorcado.
 
-import pygame
-from funciones import *
-import sys, time
-from personaje import *
+import pygame # improtamos pygame
+from funciones import * # improtamos todo de funciones.py (todas las funciones y variables)
+import sys, time # importamos sys para el cierre del juego y time para esperar 3 segundos antes de cerrar el juego
+from personaje import * # importamos todo de personaje.py (todas las funciones y variables)
 
 
-pygame.init()
+pygame.init() ## Inicializamos pygame
 
 # ----------------- CONFIGURACIÓN DE PANTALLA -----------------
 
-ANCHO = 800
-ALTO = 600
+ANCHO = 800 # Definimos ancho de pantalla
+ALTO = 600 # Definimos alto de pantalla
 
-titulo = 'Ahorcado by Rocket League'
+titulo = 'Ahorcado by Rocket League' # Definimos el título del juego
 
-pantalla = pygame.display.set_mode((ANCHO, ALTO))
+pantalla = pygame.display.set_mode((ANCHO, ALTO)) # Creamos la variable pantalla con set_mode con su ancho y alto
 
-pygame.display.set_caption(titulo)
+pygame.display.set_caption(titulo) # Seteamos el titulo del juego con set_caption 
 
-icono = pygame.image.load("logo.png")
+icono = pygame.image.load("logo.png") # Cargamos la imagen de nuestro logo
 
-pygame.display.set_icon(icono)
+pygame.display.set_icon(icono) # Setaeamos nuestro logo con set_icon
 
-clock = pygame.time.Clock()
+clock = pygame.time.Clock() # Definimos la variable clock para luego controlar los fps
 
 # ----------------- COLORES  se pueden modificar por los que elija el equipo-----------------
-BLANCO = (255, 255, 255)
-NEGRO = (0, 0, 0)
 
+BLANCO = (255, 255, 255) # Color blanco RGB
+NEGRO = (0, 0, 0) # Color negro RGB
 
 # ----------------- FUENTE -----------------
-FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
-ancho_auto = 125
-altura_auto = 125
+FUENTE = pygame.font.SysFont('freesansbold.ttf', 20) # Definimos fuente principal del juego
 
-rect_rocket_league = pygame.Rect((ANCHO / 2) + 50, 100, 300, 200)
+# ---------------- PERSONAJE PRINCIPAL (AUTO ROCKET LEAGUE) --------------- 
+
+ancho_auto = 125 # Ancho del auto
+altura_auto = 125 # Alto del auto
+
+rect_rocket_league = pygame.Rect((ANCHO / 2) + 50, 100, 300, 200) # Rectangulo del auto
+# (ANCHO / 2) + 50 = La mitad del ancho de la pantalla mas un poco a la derecha (eje X)
+# 100 = eje Y
+# 300 ANCHO rectangulo
+# 200 ALTO rectangulo
 
 personaje_x = rect_rocket_league.centerx - ancho_auto / 2
 personaje_y = rect_rocket_league.bottom - altura_auto
@@ -80,18 +87,20 @@ def jugar():
     pygame.K_u: 'u', pygame.K_v: 'v', pygame.K_w: 'w', pygame.K_x: 'x',
     pygame.K_y: 'y', pygame.K_z: 'z',
 }
+    
     lista_palabras = cargar_palabras()  # Ejecuta la función para obtener las palabras
-
-    eventos_juego = { 
-    'palabra_random' : elegir_palabra(lista_palabras),
-    'letras_adivinadas' : [],
-    'letras_correctas' : [],
-    'errores' : 0,
-    "juego_terminado":False,
+ 
+    eventos_juego = {  ## Diccionario con nuestros eventos de juego
+    'palabra_random' : elegir_palabra(lista_palabras), ## Llamado a la función para guardar la palabra a adivinar
+    'letras_adivinadas' : [], ## lista con letras incorrectas
+    'letras_correctas' : [], ## lista con letras correctas
+    'errores' : 0, ## Cantidad de errores
+    "juego_terminado":False, ## boolean que define si terminó el juego
     }
 
-    for x in eventos_juego['palabra_random']:
-        eventos_juego['letras_correctas'].append("")
+    for x in eventos_juego['palabra_random']: ## Recorremos la palabra a adivinar
+        eventos_juego['letras_correctas'].append("") ## Llenamos de strings vacíos la lista de letras correctas
+        ## 
  
     while True:
 
@@ -112,10 +121,10 @@ def jugar():
                         else:
                             for i, x in enumerate(eventos_juego['palabra_random']):
                                 if letra == x:
-                                    eventos_juego['letras_correctas'][i] = eventos_juego['palabra_random'][i]
-                    
+                                    eventos_juego['letras_correctas'][i] = letra
+                                    
 
-                                    ## ["", "", ""], [S, O, ""]
+                                    ## ["", "", ""], [S,"", L]
 
         keys_pressed = pygame.key.get_pressed()
 

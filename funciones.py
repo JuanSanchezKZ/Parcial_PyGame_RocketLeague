@@ -125,10 +125,10 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
 
 
 # ----------------- VERIFICAR LETRA -----------------
-def verificar_letra(letra, palabra: str, letras_adivinadas): ## letras adivinadas = letras incorrectas
+def verificar_letra(letra, palabra_random: str, letras_adivinadas): ## letras adivinadas = letras incorrectas
     # Agregar la letra a letras_adivinadas si no estaba
     # Retornar True si la letra está en la palabra, False si no
-    if letra in palabra:
+    if letra in palabra_random:
         return True
     else:
         pygame.mixer.Sound.play(sonido_error)
