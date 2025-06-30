@@ -43,12 +43,15 @@ NEGRO = (0, 0, 0)
 # ----------------- FUENTE -----------------
 FUENTE = pygame.font.SysFont('freesansbold.ttf', 20)
 
+ancho_auto = 125
+altura_auto = 125
+
 rect_rocket_league = pygame.Rect((ANCHO / 2) + 50, 100, 300, 200)
 
-personaje_x = rect_rocket_league.centerx - 75
-personaje_y = rect_rocket_league.bottom - 125
+personaje_x = rect_rocket_league.centerx - ancho_auto / 2
+personaje_y = rect_rocket_league.bottom - altura_auto
 
-personaje = crear_personaje(personaje_x ,personaje_y ,125 ,125 ,"rocketleague.png")
+personaje = crear_personaje(personaje_x ,personaje_y ,ancho_auto ,altura_auto ,"rocketleague.png")
 
 
 
