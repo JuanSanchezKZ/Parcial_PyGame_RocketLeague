@@ -6,7 +6,8 @@ pygame.mixer.Sound.set_volume(colision_sonido, 0.2) # Bajamos un poco el volumen
 
 def crear_personaje(x, y, ancho, alto,nombre_archivo):
 
-    imagen = pygame.image.load(nombre_archivo)
+    imagen = pygame.image.load(nombre_archivo).convert_alpha()
+
     personaje = {
         "surface": pygame.transform.scale(imagen, (ancho, alto)),
         "rect_pos": pygame.Rect(x, y, ancho, alto),
@@ -14,14 +15,16 @@ def crear_personaje(x, y, ancho, alto,nombre_archivo):
 
     return personaje
 
-def update(personaje, incremento_x, rect):
+def update(personaje, incremento_x, incremento_y,  rect):
+    
+    original_x = personaje["rect_pos"].x
+
+    original_y = personaje["rect_pos"].y
 
     personaje["rect_pos"].x += incremento_x
 
-    if personaje["rect_pos"].left < rect.left:
-        personaje["rect_pos"].left = rect.left
-        pygame.mixer.Sound.play(colision_sonido)
-    
-    if personaje["rect_pos"].right > rect.right:
-        personaje["rect_pos"].right = rect.right
-        pygame.mixer.Sound.play(colision_sonido)
+    personaje["rect_pos"].y += incremento_y
+
+    if personaje["rect_pos"].colliderect(rect):
+        personaje["rect_pos"].x = original_x
+        personaje["rect_pos"].y = original_y

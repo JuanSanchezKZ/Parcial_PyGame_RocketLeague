@@ -53,14 +53,14 @@ NEGRO = (0, 0, 0) # Color negro RGB
 ancho_auto = 125 # Ancho del auto
 altura_auto = 125 # Alto del auto
 
-rect_rocket_league = pygame.Rect((ANCHO / 2) + 50, 100, 300, 200) # Rectangulo del auto
+rect_rocket_league = pygame.Rect((ANCHO / 2) + 200, 300, 100, 50) ## Rectangulo para colisionar
 # (ANCHO / 2) + 50 = La mitad del ancho de la pantalla mas un poco a la derecha (eje X)
 # 100 = eje Y
 # 300 ANCHO rectangulo
 # 200 ALTO rectangulo
 
-personaje_x = rect_rocket_league.centerx - ancho_auto / 2
-personaje_y = rect_rocket_league.bottom - altura_auto
+personaje_x = 250 # posicion x del personaje
+personaje_y = 200 # posicion y del personaje
 
 personaje = crear_personaje(personaje_x ,personaje_y ,ancho_auto ,altura_auto ,"rocketleague.png")
 
@@ -82,7 +82,7 @@ def jugar():
 
     # Instrucción: este bloque debe ser completado por el estudiante según las consignas
 
-    keys = {
+    keys = { ## guardamos todas los eventos de letras de pygame como clave con su respectiva letra como valor
     pygame.K_a: 'a', pygame.K_b: 'b', pygame.K_c: 'c', pygame.K_d: 'd',
     pygame.K_e: 'e', pygame.K_f: 'f', pygame.K_g: 'g', pygame.K_h: 'h',
     pygame.K_i: 'i', pygame.K_j: 'j', pygame.K_k: 'k', pygame.K_l: 'l',
@@ -110,21 +110,21 @@ def jugar():
 
         clock.tick(30) ## Seteamos los fps a 30
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+        for event in pygame.event.get(): ## Recorremos los eventos de pygame
+            if event.type == pygame.QUIT: ## Si el evento es igual a QUIT
+                pygame.quit() ## Cerramos el juego
                 quit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key in keys:
-                    letra = keys[event.key].upper()
-                    if letra not in eventos_juego['letras_adivinadas']:  
-                        resultado = verificar_letra(letra, eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'])
-                        if not resultado and eventos_juego['errores'] <= 6:   
-                            eventos_juego['errores'] += 1
-                            dibujar_cuerpo(eventos_juego['errores'])
-                        else:
-                            for i, x in enumerate(eventos_juego['palabra_random']):
-                                if letra == x:
+            elif event.type == pygame.KEYDOWN: ## Si el evento es igual a presión de tecla
+                if event.key in keys: ## Si el evento está en nuestro diccionario de teclas de pygame
+                    letra = keys[event.key].upper() ## letra es igual al valor de nuestro diccionario con la clave que tomamos del input del usuario
+                    if letra not in eventos_juego['letras_adivinadas']:  ## Si la letra no está en letras adivinadas (es decir en letras equivocadas)
+                        resultado = verificar_letra(letra, eventos_juego['palabra_random'], eventos_juego['letras_adivinadas']) ## verificamos si la letra es correcta
+                        if not resultado and eventos_juego['errores'] < 6: ## Si verificar_letra devuelve false y hay menos de 6 errores   
+                            eventos_juego['errores'] += 1 ## Sumamos un error
+                            dibujar_cuerpo(eventos_juego['errores']) ## Diujamos la parte del cuerpo que corresponde
+                        else: # Sino
+                            for i, x in enumerate(eventos_juego['palabra_random']): ## utilizamos enumerate para obtener los indices de la palabra random
+                                if letra == x: 
                                     eventos_juego['letras_correctas'][i] = letra
                                     
 
@@ -134,10 +134,16 @@ def jugar():
 
         if keys_pressed[pygame.K_LEFT]: ## Si aprieta la flecha para la izquierda
             ## Llamamos a update con nuestro personaje y un movimiento sobre el eje x de -10
-            update(personaje, -10, rect_rocket_league)
+            update(personaje, -10, 0, rect_rocket_league)
         if keys_pressed[pygame.K_RIGHT]: ## Si aprieta la flecha para la derecha
             ## Llamamos a update con nuestro personaje y un movimiento sobre el eje x de 10
-            update(personaje, 10, rect_rocket_league)  
+            update(personaje, 10, 0, rect_rocket_league) 
+        if keys_pressed[pygame.K_DOWN]: ## Si aprieta la flecha para abajo
+            update(personaje, 0, 10, rect_rocket_league) 
+            ## Llamamos a update con nuestro personaje y un movimiento sobre el eje y de 10
+        if keys_pressed[pygame.K_UP]: # Si aprieta la flecha para arriba
+            update(personaje, 0, -10, rect_rocket_league) 
+            ## Llamamos a update con nuestro personaje y un movimiento sobre el eje y de -10
 
         ## Llamamos a dibujar_juego con los eventos del ahorcado como argumentos.
         dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])    
@@ -150,26 +156,27 @@ def jugar():
         if eventos_juego['errores'] >= 6 or "" not in eventos_juego['letras_correctas']:
             eventos_juego['juego_terminado'] = True
 
-        if eventos_juego['juego_terminado']:
+        if eventos_juego['juego_terminado']: ## Si el juego terminó
 
-            pantalla.fill(AZUL)
+            pantalla.fill(AZUL) ## Dibujamos toda la pantalla de azul si perdió o ganó para dibujar el texto del resultado del juego
 
-            if eventos_juego['errores'] >= 6 or "":
-                
+            if eventos_juego['errores'] >= 6: ## Si los errrores son iguales o mayores a 6
+                # mostramos el texto de perdiste con la palabra que era
                 mostrar_texto(f"¡Perdiste, la palabra era {eventos_juego['palabra_random']}!", 125, 300, BLANCO, 50)
+                # Reproducimos sonido de derrota
                 pygame.mixer.Sound.play(perder_sonido)
 
-            if "" not in eventos_juego['letras_correctas']:
+            if "" not in eventos_juego['letras_correctas']: # Si no hay más letras por adivinar significa que gano
 
-                mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50)
-                pygame.mixer.Sound.play(ganar_sonido)
+                mostrar_texto(f"¡Ganaste!", 325, 300, BLANCO, 50) # mostramos el texto de victoria
+                pygame.mixer.Sound.play(ganar_sonido) # Reproducimos el sonido de victoria
      
-            pygame.display.flip()
-            time.sleep(5)
-            pygame.quit()
+            pygame.display.flip() ## Actualizamos el juego si gano o perdió
+            time.sleep(5) ## Pausamos el juego 5 segundos antes de cerrar el juego
+            pygame.quit() ## Cerramos pygame
             sys.exit() ## Cerramos el juego finalmente en cualquiera de los dos casos si perdió o ganó            
 
-        pygame.display.update()
+        pygame.display.update() ## Updateamos constantemente en el bucle while nuestro juego
         
 
         
