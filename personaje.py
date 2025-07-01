@@ -28,3 +28,13 @@ def update(personaje, incremento_x, incremento_y,  rect):
     if personaje["rect_pos"].colliderect(rect): # Si colisionó con un rectangulo
         personaje["rect_pos"].x = original_x # Generamos un efecto de choque evitando movimiento "trabando" el eje x del personaje
         personaje["rect_pos"].y = original_y # Lo mismo con el eje y
+     
+
+    if personaje["rect_pos"].left < 310:
+        personaje["rect_pos"].left = 310
+    if personaje["rect_pos"].right > 800: 
+        personaje["rect_pos"].right = 800
+    if personaje["rect_pos"].top < 70:
+        personaje["rect_pos"].top = 70
+    if personaje["rect_pos"].bottom > 450:
+        personaje["rect_pos"].bottom = 450    

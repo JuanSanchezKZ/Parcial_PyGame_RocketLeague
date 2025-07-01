@@ -59,7 +59,7 @@ rect_rocket_league = pygame.Rect((ANCHO / 2) + 200, 300, 100, 50) ## Rectangulo 
 # 300 ANCHO rectangulo
 # 200 ALTO rectangulo
 
-personaje_x = 250 # posicion x del personaje
+personaje_x = 400 # posicion x del personaje
 personaje_y = 200 # posicion y del personaje
 
 ## Creamos el personaje con crear_personaje mandando los ejes, el alto, el ancho y el nombre del archivo.
