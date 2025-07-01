@@ -102,7 +102,6 @@ def dibujar_lineas_o_texto(letras_correctas):
             pygame.draw.line(pantalla, BLANCO, (350 + i * 40, 500), (380 + i * 40, 500), 3) # Dibujamos una linea horizontal color Blanco con su punto de inicio y su punto final
         else: #Sino
             mostrar_texto(caracter, 350 + i * 42, 480, BLANCO, 30) # Mostramos el caracter en la pantalla en la posicion especifica
-        
 
 
 # ----------------- DIBUJAR JUEGO EN PANTALLA -----------------
@@ -110,18 +109,18 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
     # Llenar fondo, mostrar palabra oculta, letras ingresadas y dibujar estructura y cuerpo
     pantalla.fill(AZUL) # Llenamos el fondo con el color azul
 
-    mostrar_texto(descripcion_1, 15, 15, BLANCO, 25) 
+    mostrar_texto(descripcion_1, 15, 15, BLANCO, 25) # Dibujamos la primera parte de la  descripción del juego
 
-    mostrar_texto(descripcion_2, 15, 38, BLANCO, 25)
+    mostrar_texto(descripcion_2, 15, 38, BLANCO, 25) # Dibujamos la segunda parte de la descripción del juego
 
-    rect_x = (800 / 2) + 200
-    rect_y = 300
+    rect_x = (800 / 2) + 200 # definimos la posicion eje x del rectangulo para colisionar (ancho / 2 + offset de 200)
+    rect_y = 300 # definimos posicion eje y de 300 del rectangulo
 
     # Dibujamos el rectángulo
     pygame.draw.rect(pantalla, BLANCO, (rect_x, rect_y, 100, 50), 3)
     
-    for i, palabra in enumerate(letras_adivinadas):
-            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30) 
+    for i, palabra in enumerate(letras_adivinadas): ## Recorremos las letras adivinadas (incorrectas) para dibujarlas en pantalla
+            mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30) # Utilziamos el indice para generar un offset es decir un espacio hacia la derecha sobre el x para el dibujado
 
     dibujar_lineas_o_texto(letras_correctas) ## Dibujamos lineas o texto dependiendo si adivino o se equivocó
 

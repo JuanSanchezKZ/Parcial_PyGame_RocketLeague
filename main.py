@@ -154,7 +154,7 @@ def jugar():
         ## Llamamos a dibujar_juego con los eventos del ahorcado como argumentos.
         dibujar_juego(eventos_juego['palabra_random'], eventos_juego['letras_adivinadas'], eventos_juego['errores'], eventos_juego['letras_correctas'])    
         
-        ## Dibujamos el personaje en pantalla llamando utilizando blit
+        ## Dibujamos el personaje en pantalla utilizando blit
         pantalla.blit(personaje['surface'], personaje['rect_pos'])
 
         ## Si los errores son mayores o iguales a 6 o no hay más letras adivinar en letras_correctas
