@@ -33,13 +33,13 @@ pygame.mixer.Sound.set_volume(perder_sonido, 0.2) # Bajamos un poco el volumen
 
 titulo = 'Ahorcado by Rocket League' # Definimos el título del juego
 
-pantalla = pygame.display.set_mode((ANCHO, ALTO)) # Creamos la variable pantalla con set_mode con su ancho y alto
-
-pygame.display.set_caption(titulo) # Seteamos el titulo del juego con set_caption 
-
 icono = pygame.image.load("archivos/logo.png") # Cargamos la imagen de nuestro logo
 
 pygame.display.set_icon(icono) # Setaeamos nuestro logo con set_icon
+
+pantalla = pygame.display.set_mode((ANCHO, ALTO)) # Creamos la variable pantalla con set_mode con su ancho y alto
+
+pygame.display.set_caption(titulo) # Seteamos el titulo del juego con set_caption 
 
 clock = pygame.time.Clock() # Definimos la variable clock para luego controlar los fps
 
@@ -164,7 +164,7 @@ def jugar():
 
         if eventos_juego['juego_terminado']: ## Si el juego terminó
 
-            pantalla.fill(AZUL) ## Dibujamos toda la pantalla de azul si perdió o ganó para dibujar el texto del resultado del juego
+            pantalla.fill(AZUL) ## Dibujamos toda la pantalla de azul para dibujar el texto del resultado del juego
 
             if eventos_juego['errores'] >= 6: ## Si los errrores son iguales o mayores a 6
                 # mostramos el texto de perdiste con la palabra que era
