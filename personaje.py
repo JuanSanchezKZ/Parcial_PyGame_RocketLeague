@@ -1,7 +1,7 @@
 import pygame ## Cargamos la librería pygame
 
 pygame.mixer.init()  # Inicializa el motor de sonido
-colision_sonido = pygame.mixer.Sound("colision.wav")  # Cargamos el archivo para el sonido de colision
+colision_sonido = pygame.mixer.Sound("archivos/colision.wav")  # Cargamos el archivo para el sonido de colision
 pygame.mixer.Sound.set_volume(colision_sonido, 0.2) # Bajamos un poco el volumen
 
 def crear_personaje(x, y, ancho, alto,nombre_archivo):

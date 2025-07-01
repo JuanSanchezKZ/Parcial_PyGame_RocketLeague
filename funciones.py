@@ -8,7 +8,7 @@ pantalla = pygame.display.set_mode(ancho_y_alto) # Inicializamos la pantalla con
 
 # ----------------- SONIDO -----------------
 pygame.mixer.init()  # Inicializa el motor de sonido
-sonido_error = pygame.mixer.Sound("error.wav")  # Asegurate de tener este archivo
+sonido_error = pygame.mixer.Sound("archivos/error.wav")  # Asegurate de tener este archivo
 pygame.mixer.Sound.set_volume(sonido_error, 0.2) # Ajustamos el volumen del sonido de error
 
 descripcion_1 = 'Adiviná la palabra. Tenés 6 intentos para completar la palabra.' # Texto 1 de descripcion del juego

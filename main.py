@@ -26,9 +26,9 @@ ALTO = 600 # Definimos alto de pantalla
 # --------------------- SONIDOS ------------------------ #
 
 pygame.mixer.init()  # Inicializa el motor de sonido
-ganar_sonido = pygame.mixer.Sound("ganar_sonido.wav")  # Cargamos sonido de victoria
+ganar_sonido = pygame.mixer.Sound("archivos/ganar_sonido.wav")  # Cargamos sonido de victoria
 pygame.mixer.Sound.set_volume(ganar_sonido, 0.2) # Bajamos un poco el volumen
-perder_sonido = pygame.mixer.Sound("perder_sonido.mp3")  # Cargamos sonido de victoria
+perder_sonido = pygame.mixer.Sound("archivos/perder_sonido.mp3")  # Cargamos sonido de victoria
 pygame.mixer.Sound.set_volume(perder_sonido, 0.2) # Bajamos un poco el volumen
 
 titulo = 'Ahorcado by Rocket League' # Definimos el título del juego
@@ -37,7 +37,7 @@ pantalla = pygame.display.set_mode((ANCHO, ALTO)) # Creamos la variable pantalla
 
 pygame.display.set_caption(titulo) # Seteamos el titulo del juego con set_caption 
 
-icono = pygame.image.load("logo.png") # Cargamos la imagen de nuestro logo
+icono = pygame.image.load("archivos/logo.png") # Cargamos la imagen de nuestro logo
 
 pygame.display.set_icon(icono) # Setaeamos nuestro logo con set_icon
 
@@ -63,7 +63,7 @@ personaje_x = 400 # posicion x del personaje
 personaje_y = 200 # posicion y del personaje
 
 ## Creamos el personaje con crear_personaje mandando los ejes, el alto, el ancho y el nombre del archivo.
-personaje = crear_personaje(personaje_x ,personaje_y ,ancho_auto ,altura_auto ,"rocketleague.png")
+personaje = crear_personaje(personaje_x ,personaje_y ,ancho_auto ,altura_auto ,"archivos/rocketleague.png")
 
 
 
@@ -116,18 +116,25 @@ def jugar():
                 pygame.quit() ## Cerramos el juego
                 quit()
             elif event.type == pygame.KEYDOWN: ## Si el evento es igual a presión de tecla
+                letra = '' # Declaramos letra como un string vacio
                 if event.key in keys: ## Si el evento está en nuestro diccionario de teclas de pygame
                     letra = keys[event.key].upper() ## letra es igual al valor de nuestro diccionario con la clave que tomamos del input del usuario
+                elif event.unicode.upper() == "Ñ": # Si no está en nuestro diccionario entonces verificamos si es una ñ
+                    letra = "Ñ" # Seteamos letra igual a Ñ
+                    
+
+                if not letra == '': # Si letra no está vacía entonces
                     if letra not in eventos_juego['letras_adivinadas']:  ## Si la letra no está en letras adivinadas (es decir en letras equivocadas)
                         resultado = verificar_letra(letra, eventos_juego['palabra_random'], eventos_juego['letras_adivinadas']) ## verificamos si la letra es correcta
-                        if not resultado and eventos_juego['errores'] < 6: ## Si verificar_letra devuelve false y hay menos de 6 errores   
+                        if not resultado: ## Si verificar_letra devuelve false (o sea no adivino correctamente)
                             eventos_juego['errores'] += 1 ## Sumamos un error
                         else: # Sino
                             for i, x in enumerate(eventos_juego['palabra_random']): ## utilizamos enumerate para obtener los indices de la palabra random
                                 if letra == x: ## Si la letra es acertada (o sea está en la palabra a adivinar)
-                                    eventos_juego['letras_correctas'][i] = letra ## guardamos la letra en el guardar que corresponde según el indice de la palabra a adivinar
-
+                                    eventos_juego['letras_correctas'][i] = letra ## guardamos la letra en el lugar que corresponde según el indice de la palabra a adivinar
                                     ## ["", "", ""], [S,"", L]
+                                    ##   0  1   2     0  1  2
+
 
         keys_pressed = pygame.key.get_pressed() ## Obtenemos las keys presionadas
 
