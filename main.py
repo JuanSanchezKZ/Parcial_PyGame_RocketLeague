@@ -62,6 +62,7 @@ rect_rocket_league = pygame.Rect((ANCHO / 2) + 200, 300, 100, 50) ## Rectangulo 
 personaje_x = 250 # posicion x del personaje
 personaje_y = 200 # posicion y del personaje
 
+## Creamos el personaje con crear_personaje mandando los ejes, el alto, el ancho y el nombre del archivo.
 personaje = crear_personaje(personaje_x ,personaje_y ,ancho_auto ,altura_auto ,"rocketleague.png")
 
 
@@ -121,12 +122,10 @@ def jugar():
                         resultado = verificar_letra(letra, eventos_juego['palabra_random'], eventos_juego['letras_adivinadas']) ## verificamos si la letra es correcta
                         if not resultado and eventos_juego['errores'] < 6: ## Si verificar_letra devuelve false y hay menos de 6 errores   
                             eventos_juego['errores'] += 1 ## Sumamos un error
-                            dibujar_cuerpo(eventos_juego['errores']) ## Diujamos la parte del cuerpo que corresponde
                         else: # Sino
                             for i, x in enumerate(eventos_juego['palabra_random']): ## utilizamos enumerate para obtener los indices de la palabra random
-                                if letra == x: 
-                                    eventos_juego['letras_correctas'][i] = letra
-                                    
+                                if letra == x: ## Si la letra es acertada (o sea está en la palabra a adivinar)
+                                    eventos_juego['letras_correctas'][i] = letra ## guardamos la letra en el guardar que corresponde según el indice de la palabra a adivinar
 
                                     ## ["", "", ""], [S,"", L]
 
@@ -178,9 +177,6 @@ def jugar():
 
         pygame.display.update() ## Updateamos constantemente en el bucle while nuestro juego
         
-
-        
-
 # No ejecutar el juego automáticamente: solo se invoca desde consola o importación
 # Descomentar la línea siguiente para probar el juego terminado:
 jugar()

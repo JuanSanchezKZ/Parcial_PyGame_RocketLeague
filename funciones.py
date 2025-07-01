@@ -123,11 +123,11 @@ def dibujar_juego(palabra, letras_adivinadas, errores, letras_correctas):
     for i, palabra in enumerate(letras_adivinadas):
             mostrar_texto(palabra, 50 + i * 30, 100, BLANCO, 30) 
 
-    dibujar_lineas_o_texto(letras_correctas)
+    dibujar_lineas_o_texto(letras_correctas) ## Dibujamos lineas o texto dependiendo si adivino o se equivocó
 
-    dibujar_cuerpo(errores)
+    dibujar_cuerpo(errores) # Dibujamos el cuerpo con sus errores
 
-    dibujar_estructura()
+    dibujar_estructura() ## Dibujamos la estructura del ahorcado
 
 
 # ----------------- VERIFICAR LETRA -----------------
