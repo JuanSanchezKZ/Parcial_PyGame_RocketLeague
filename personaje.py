@@ -28,7 +28,7 @@ def update(personaje, incremento_x, incremento_y,  rect):
     if personaje["rect_pos"].colliderect(rect): # Si colisionó con un rectangulo
         personaje["rect_pos"].x = original_x # Generamos un efecto de choque evitando movimiento "trabando" el eje x del personaje
         personaje["rect_pos"].y = original_y # Lo mismo con el eje y
-     
+        pygame.mixer.Sound.play(colision_sonido)
 
     if personaje["rect_pos"].left < 310:
         personaje["rect_pos"].left = 310
