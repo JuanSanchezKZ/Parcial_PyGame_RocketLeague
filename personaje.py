@@ -21,6 +21,8 @@ def update(personaje, incremento_x, incremento_y,  rect):
 
     original_y = personaje["rect_pos"].y # La y original del personaje para generar la colision
 
+
+    ## Declaramos los limites donde se va a poder mover el personaje
     hitbox_left = 310
     hitbox_right = 800
     hitbox_top = 70
