@@ -26,8 +26,10 @@ ALTO = 600 # Definimos alto de pantalla
 # --------------------- SONIDOS ------------------------ #
 
 pygame.mixer.init()  # Inicializa el motor de sonido
+
 ganar_sonido = pygame.mixer.Sound("archivos/ganar_sonido.wav")  # Cargamos sonido de victoria
 pygame.mixer.Sound.set_volume(ganar_sonido, 0.2) # Bajamos un poco el volumen
+
 perder_sonido = pygame.mixer.Sound("archivos/perder_sonido.mp3")  # Cargamos sonido de victoria
 pygame.mixer.Sound.set_volume(perder_sonido, 0.2) # Bajamos un poco el volumen
 

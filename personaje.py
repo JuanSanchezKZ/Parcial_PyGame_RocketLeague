@@ -21,6 +21,11 @@ def update(personaje, incremento_x, incremento_y,  rect):
 
     original_y = personaje["rect_pos"].y # La y original del personaje para generar la colision
 
+    hitbox_left = 310
+    hitbox_right = 800
+    hitbox_top = 70
+    hitbox_bottom = 450
+
     personaje["rect_pos"].x += incremento_x # Mvemos el personaje sobre el eje x
 
     personaje["rect_pos"].y += incremento_y # Movemos el personaje sobre el eje y
@@ -29,12 +34,12 @@ def update(personaje, incremento_x, incremento_y,  rect):
         personaje["rect_pos"].x = original_x # Generamos un efecto de choque evitando movimiento "trabando" el eje x del personaje
         personaje["rect_pos"].y = original_y # Lo mismo con el eje y
         pygame.mixer.Sound.play(colision_sonido)
-
-    if personaje["rect_pos"].left < 310:
-        personaje["rect_pos"].left = 310
-    if personaje["rect_pos"].right > 800: 
-        personaje["rect_pos"].right = 800
-    if personaje["rect_pos"].top < 70:
-        personaje["rect_pos"].top = 70
-    if personaje["rect_pos"].bottom > 450:
-        personaje["rect_pos"].bottom = 450    
+    ## Generamos una hitbox invisible para que no interfiera como el juego en si
+    if personaje["rect_pos"].left < hitbox_left:  # hitbox del lado izquierdo (ahorcado)   
+        personaje["rect_pos"].left = hitbox_left
+    if personaje["rect_pos"].right > hitbox_right: # hitbox del lado derecho (extremo derecho de la pantalla)
+        personaje["rect_pos"].right = hitbox_right
+    if personaje["rect_pos"].top < hitbox_top: # hitbox de arriba (descripcion)
+        personaje["rect_pos"].top = hitbox_top
+    if personaje["rect_pos"].bottom > hitbox_bottom: # hitbox de abajo (texto a adivinar)
+        personaje["rect_pos"].bottom = hitbox_bottom    
